@@ -1,0 +1,66 @@
+# Welcome to Serverless!
+service: photos
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: python3.7
+  profile: cr
+  region: us-west-2
+  stage: ${self:custom.currentStage}
+  logRetentionInDays: 5
+  timeout: 30
+  iamManagedPolicies: 
+    - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - s3:ListBucket
+        - s3:PutObject
+        - s3:GetObject
+      Resource: "arn:aws:s3:::crphotoapp"
+    - Effect: Allow
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource: "*"
+  environment:
+    DYNAMODB_TABLE: "photoUsers"
+
+package: 
+  include:
+    - lib.py
+
+custom:
+  defaultStage: dev
+  currentStage: ${opt:stage, self:custom.defaultStage}
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 2
+
+functions:
+  list:
+    handler: photos.list
+    events:
+      - http:
+          path: /images
+          method: get
+  delete:
+    handler: photos.delete
+    events:
+      - http:
+          path: /images
+          method: delete
+
+
+  upload:
+    handler: photos.upload
+    events:
+      - http:
+          path: /images
+          method: post
