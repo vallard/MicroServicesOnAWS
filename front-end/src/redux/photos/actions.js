@@ -22,12 +22,12 @@ export const getPhotos = () => ({
 })
 
 
-export const delPhoto = (photo) => ({
+export const delPhoto = (id) => ({
   type: DEL_PHOTO,
-  id: photo
+  id,
 })
 
 export const upPhoto = (data) => ({
   type: UP_PHOTO,
-  data: data
+  data,
 })

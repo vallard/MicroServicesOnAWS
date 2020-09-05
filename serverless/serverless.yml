@@ -13,6 +13,8 @@ provider:
   stage: ${self:custom.currentStage}
   logRetentionInDays: 5
   timeout: 30
+  environment:
+    DYNAMODB_TABLE: "photoUsers"
   iamManagedPolicies: 
     - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
   iamRoleStatements:
@@ -28,8 +30,22 @@ provider:
         - logs:CreateLogStream
         - logs:PutLogEvents
       Resource: "*"
-  environment:
-    DYNAMODB_TABLE: "photoUsers"
+      # have to allow dynamodb stuff. 
+    - Effect: Allow
+      Action: 
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:DeleteItem
+        - dynamodb:UpdateItem
+      Resource: arn:aws:dynamodb:us-west-2:188966951897:table/photoUsers
+    - Effect: Allow
+      Action:
+        - cognito-idp:AdminListGroupsForUser
+        - cognito-idp:AdminCreateUser
+        - cognito-idp:AdminConfirmSignUp
+        - cognito-idp:AdminGetUser
+      Resource: ${self:custom.userPoolArn}
 
 package: 
   include:
@@ -38,29 +54,45 @@ package:
 custom:
   defaultStage: dev
   currentStage: ${opt:stage, self:custom.defaultStage}
+  userPoolArn: "arn:aws:cognito-idp:us-west-2:188966951897:userpool/us-west-2_v8zZp3Jvv"
   prune:
     automatic: true
     includeLayers: true
     number: 2
+
 
 functions:
   list:
     handler: photos.list
     events:
       - http:
-          path: /images
+          path: /photos
           method: get
+          cors: true
+          authorizer: aws_iam
+
   delete:
     handler: photos.delete
     events:
       - http:
-          path: /images
+          path: /photos
           method: delete
-
+          cors: true
+          authorizer: aws_iam
 
   upload:
     handler: photos.upload
     events:
-      - http:
-          path: /images
+      - http: 
+          path: /photos
           method: post
+          cors: true
+          authorizer: aws_iam
+
+resources:
+  - ${file(resources/api-gateway-errors.yml)}
+
+# prune files to not take so much space in S3
+# allow multipart upload files
+plugins: 
+  - serverless-prune-plugin

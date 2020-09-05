@@ -12,14 +12,19 @@ import {
 
 class Photos extends Component {
 
- 
+  componentDidMount() {
+    this.props.getPhotos()
+  } 
+
   uploadPhoto = (e) => {
     var f = e.target;
     if (f.files[0]) {
-      let data = new FormData();
+      const file = f.files[0]
+      this.props.upPhoto(file);
+      /*data.append('name', 'Image Upload');
       data.append('file', f.files[0]);
       data.append('filename', f.files[0].name);
-      this.props.upPhoto(data);
+      this.props.upPhoto(data);*/
     }
   }
 
@@ -32,8 +37,9 @@ class Photos extends Component {
   render() {
     return (
     <>
-      <Navi user={this.props.user} signOutFunc={this.props.signOut} />
+      <Navi user={this.props.user} signOutFunc={this.props.signOut} errors={this.props.photoErrors} />
       <Home photos={this.props.photos} 
+        loading={this.props.photosLoading}
         uploadFunc={this.uploadPhoto}
         delFunc={this.deletePhoto}
       />
@@ -46,6 +52,8 @@ class Photos extends Component {
 const mapStateToProps = (state, ownProps) => ({
   user: state.Auth.user,
   photos: state.Photos.photos,
+  photoErrors: state.Photos.error,
+  photosLoading: state.Photos.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({

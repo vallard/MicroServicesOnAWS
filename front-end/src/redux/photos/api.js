@@ -1,68 +1,36 @@
-//const hname = window.location.hostname
-//export const API = "http://" + hname + ":5000"
-export const API = "http://10.10.20.200.xip.io"
-export const getAPI = API + "/images/list";
-export const delAPI = API + "/images/delete";
-export const upAPI = API + "/images/upload";
+import { API, Storage, Logger } from 'aws-amplify';
+import { APINAME  } from '../../config';
+
+//Logger.LOG_LEVEL = 'DEBUG'
 
 const api = {
   get() {
-    return fetch(getAPI, {})
-    .then(statusHelper)
-    .then(data => {
-      return data
-    })
-    .catch( (error) => {
-      console.log("catch error: " , error)
-      return error
-    })
+    const path = '/photos';
+    const myInit = {
+    }
+    return API.get(APINAME, path, myInit);
   },
   del(userData) { 
-    return fetch(delAPI, {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "id" : userData.id
-      }),
-    })
-    .then(statusHelper)
-    .then(data => {
-      return data
-    })
-    .catch( (error) => {
-      console.log("catch error: " , error)
-      return error
-    })
+    const path = `/photos?id={userData.id}`;
+    return API.delete(APINAME, path, null);
   },
-  up(userData) {
-    return fetch(upAPI, {
-        method: 'POST',
-        body:  userData,
-    })
-    .then(statusHelper)
-    .then(data => {
-      return data
-    })
-    .catch( (error) => {
-      console.log("catch error: " , error)
-      return error
-    })
-  },
-}
 
-// thanks: https://github.com/redux-saga/redux-saga/issues/561
-function statusHelper (response) {
-  let json = response.json(); // there's always a body.
-  if (response.status >= 200 && response.status < 300) {
-    return json.then(Promise.resolve(response))
-  } else {
-    if (! json.error) {
-      json.error = "Unable to get server settings."
+  /* Hack because amplify doesn't support multipart file uploads. */
+  /* https://github.com/aws-amplify/amplify-js/issues/1437 */
+  up(photoData) {
+    return Storage.put(photoData.name, photoData, {
+      level: 'private',
+      contentype: photoData.type
+    })
+  },
+  write(data) {
+    const path = '/photos';
+    const myInit = {
+      body: {
+        "name" : data.name,
+      }
     }
-    return json.then(Promise.reject.bind(Promise))
+    return API.post(APINAME, path, myInit);
   }
 }
 

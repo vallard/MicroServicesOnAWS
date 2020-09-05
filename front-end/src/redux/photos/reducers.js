@@ -1,4 +1,5 @@
 import {
+  GET_PHOTOS,
   GOT_PHOTOS,
   PHOTO_ERROR,
   DEL_PHOTO,
@@ -13,6 +14,8 @@ const photos = (state = {
   loading: false,
   }, action) => {
   switch (action.type) {
+    case GET_PHOTOS:
+      return {...state, loading: true, error: null}
     case GOT_PHOTOS:
       return {...state, loading: false, photos: action.photos, error: null};
     case PHOTO_ERROR: 

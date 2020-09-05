@@ -1,20 +1,22 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Spinner from 'react-bootstrap/Spinner';
+import S3Image from './S3Image';
 
-const Home = ({photos, uploadFunc, delFunc}) => (
+const Home = ({photos, uploadFunc, delFunc, loading}) => {
+  return (
     <div className="container">
-        <p className="lead">
-          Welcome to your photo album!
-        </p>
+        {loading && 
+          <div className="text-center">
+            <Spinner animation="grow" variant="primary"/>
+          </div>
+        }
+        <br/>
         <div className="row">
-          {photos && photos.map( (photo, i) => (
+          {photos && photos.photos && photos.photos.map( (photo, i) => (
             <div className="card card-photo col-sm-3" key={i + "-" + photo.id}>
-              { photo.url == null ? 
-                  <br/>
-                  :
-                  <img src={photo.url} className="card-img-top" alt={i + "-" + photo.name} />
-              }
+              <S3Image photoName={photo.name} />
               <div className="card-body">
                 { photo.objects == null ? 
                     <br/>
@@ -38,6 +40,6 @@ const Home = ({photos, uploadFunc, delFunc}) => (
           </Form.Group>
         </Form>
     </div>
-);
+)};
 
 export default Home

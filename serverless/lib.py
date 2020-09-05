@@ -1,5 +1,12 @@
 import json
 
+
+def get_file_length(filepointer):
+    filepointer.seek(0, 2) # go to the end of the file pointer
+    file_length = filepointer.tell() # get the length of the file
+    filepointer.seek(0, 0) # set the file pointer back to the beginning
+    return file_length
+
 def get_userid(event):
     return event['requestContext']['identity']['cognitoAuthenticationProvider'].split(':')[-1]
 
@@ -20,3 +27,5 @@ class DecimalEncoder(json.JSONEncoder):
         if isinstance(obj, decimal.Decimal):
             return int(obj)
         return super(DecimalEncoder, self).default(obj)
+
+

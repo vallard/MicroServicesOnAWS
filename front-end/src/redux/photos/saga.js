@@ -13,22 +13,40 @@ import {
 
 export function* get_photos() {
   /* get the photos */
-  let response = yield call(photoAPI.get)
-  if (response instanceof Error) {
-    return yield put(gotError(response))
+  try {
+    let response = yield call(photoAPI.get)
+    console.log("response: ", response);
+    return yield put(gotPhotos(response))
+  } catch(error) {
+    if(! error.response) {
+      return yield put(gotError("Photo Loading Issue: " + error.toString()));
+    }
+    if(error.response.status >= 500 && error.response.status < 600) {
+      return yield put(gotError("Internal server error. Status code: " + error.response.status));
+    }else if (error.response.status >= 400 && error.response.status < 500) {
+      if(error.response.data.message) {
+        return yield put(gotError(error.response.data.message));
+      }
+      return yield put(gotError(error.response.data.error));
+    }
+    return yield put(gotError("Undefined error: " + error.response.status))
+
   }
-  console.log(response)
-  return yield put(gotPhotos(response.photos))
 } 
 
 export function* up_photo(action) {
   /* upload the photo */
-  let response = yield call(photoAPI.up, action.data) 
-  if (response instanceof Error) {
-    return yield put(gotError(response))
+  console.log("Data upload: ", action.data);
+  try {
+    // upload to S3
+    var response = yield call(photoAPI.up, action.data) 
+    // if result is successful, write in database.
+    response = yield call(photoAPI.write, action.data); 
+    console.log(response)
+    return yield put(gotPhotos(response))
+  } catch(error) {
+    return yield put(gotError(error))
   }
-  console.log(response)
-  return yield put(gotPhotos(response.photos))
 }
 
 export function* del_photo(action) {
