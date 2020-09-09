@@ -2,6 +2,7 @@ import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
+import Card from 'react-bootstrap/Card';
 import S3Image from './S3Image';
 
 const Home = ({photos, uploadFunc, delFunc, loading}) => {
@@ -15,9 +16,9 @@ const Home = ({photos, uploadFunc, delFunc, loading}) => {
         <br/>
         <div className="row">
           {photos && photos.photos && photos.photos.map( (photo, i) => (
-            <div className="card card-photo col-sm-3" key={i + "-" + photo.id}>
+            <Card className="col-sm-3" key={i + "-" + photo.id} >
               <S3Image photoName={photo.name} />
-              <div className="card-body">
+              <Card.Body>
                 { photo.objects == null ? 
                     <br/>
                     :
@@ -28,10 +29,13 @@ const Home = ({photos, uploadFunc, delFunc, loading}) => {
                     ))}
                     </div>
                 }
-                <Button variant="primary" id={i} onClick={delFunc}>Delete
-                </Button>
-              </div>
-            </div>
+                <div className="text-right">
+                  <Button variant="primary" id={photo.id} onClick={delFunc}>
+                    Delete
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
           ))}
         </div>
         <Form>

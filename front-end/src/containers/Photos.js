@@ -29,9 +29,8 @@ class Photos extends Component {
   }
 
   deletePhoto = (e) => {
-    const po = this.props.photos[e.target.id]
-    const p = po['_id'].$oid
-    this.props.delPhotos(p);
+    const photoId = e.target.id
+    this.props.delPhotos(photoId);
   }
 
   render() {

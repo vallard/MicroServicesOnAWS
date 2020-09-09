@@ -1,4 +1,5 @@
-import { API, Storage, Logger } from 'aws-amplify';
+//import { API, Storage, Logger } from 'aws-amplify';
+import { API, Storage } from 'aws-amplify';
 import { APINAME  } from '../../config';
 
 //Logger.LOG_LEVEL = 'DEBUG'
@@ -10,13 +11,17 @@ const api = {
     }
     return API.get(APINAME, path, myInit);
   },
+
   del(userData) { 
-    const path = `/photos?id={userData.id}`;
-    return API.delete(APINAME, path, null);
+    const path = `/photos?id=${userData.id}`;
+    return API.del(APINAME, path, null);
   },
 
-  /* Hack because amplify doesn't support multipart file uploads. */
-  /* https://github.com/aws-amplify/amplify-js/issues/1437 */
+  /* uploading a photo is a two part operation: 
+   * 1. Upload the photo to S3 directly
+   * 2. Write the photo upload into a database.
+  */
+
   up(photoData) {
     return Storage.put(photoData.name, photoData, {
       level: 'private',

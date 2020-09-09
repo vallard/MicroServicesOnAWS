@@ -15,9 +15,10 @@ const Navi = ({user, signOutFunc, errors}) => (
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Link href="https://github.com/vallard/MicroServicesOnAWS">Docs</Nav.Link>
+            {/*<Nav.Link href="https://github.com/vallard/MicroServicesOnAWS">Docs</Nav.Link> */}
             <NavDropdown title={user || "user"} id="collasible-nav-dropdown"> 
               <NavDropdown.Item onClick={signOutFunc} >Sign Out</NavDropdown.Item>
+              <NavDropdown.Item href="https://github.com/vallard/MicroServicesOnAWS">Code</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

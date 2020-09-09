@@ -10,14 +10,16 @@ import {
   gotError,
   gotPhotos,
 } from './actions';
+const DEBUG = false;
 
 export function* get_photos() {
   /* get the photos */
   try {
     let response = yield call(photoAPI.get)
-    console.log("response: ", response);
+    DEBUG && console.log("response: ", response);
     return yield put(gotPhotos(response))
   } catch(error) {
+    DEBUG && console.log("error: ", error);
     if(! error.response) {
       return yield put(gotError("Photo Loading Issue: " + error.toString()));
     }

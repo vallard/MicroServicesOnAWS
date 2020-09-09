@@ -1,6 +1,6 @@
 import json, os, time, base64
 from datetime import datetime, timedelta
-import boto3
+import boto3, uuid
 from lib import formatted_error, get_userid, DecimalEncoder, get_file_length
 from boto3.dynamodb.conditions import Key, Attr
 
@@ -31,8 +31,8 @@ def list(event, context):
         return formatted_error("Table Query Error: "+ str(e))
 
     if 'Item' not in result:
-        return formatted_error("Error getting items")
-
+        result['Item'] = {'photos': []}
+        
     response = {
         "statusCode" : 200,
         "headers": headers,
@@ -84,13 +84,13 @@ def upload(event, context):
                     },
                     ReturnValues="UPDATED_NEW"
                 )
-                print("updated photos: ", response)
             else: 
                 # Insert a new photo and item. 
                 response = table.put_item(
                     Item={
                         'id': userId,
                         'photos': [{
+                                'id': str(uuid.uuid4()),
                                 'name': data['name'],
                                 'date': datetime.now().isoformat()
                         }]
@@ -113,3 +113,45 @@ def delete(event, context):
     """
     Delete images
     """
+    qp = event['queryStringParameters']
+    if 'id' not in qp:
+        return formatted_error("Photo name should be sent with request: 'name'")
+    photoId = qp['id'] 
+    userId = ""
+    table = ""
+    try:
+       userId = get_userid(event)
+    except Exception as e:
+        return formatted_error("Could not get user id from request: "+ str(e))
+
+    try: 
+        table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
+        response = table.get_item(Key={'id': userId})
+    except ClientError as e: 
+        msg = e.response['Error']['Message']
+        #print(msg)
+        return formatted_error(msg)
+
+    if 'Item' not in response:
+        return formatted_error(f"No entry for {userId} in the table.")
+    current_photos = response['Item']['photos']
+    # remove the photo. 
+    photos = [x for x in current_photos if x['id'] != photoId]
+    # update the data
+    response = table.update_item(
+        Key={
+            'id': userId,
+        },
+        UpdateExpression="set photos=:p", 
+        ExpressionAttributeValues={
+            ':p': photos
+        },
+        ReturnValues="UPDATED_NEW"
+    )
+    q = table.get_item(Key={'id': userId} )
+    response = {
+        "statusCode" : 200,
+        "headers": headers,
+        "body": json.dumps(q['Item'], cls=DecimalEncoder)
+    }
+    return response
