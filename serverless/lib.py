@@ -7,8 +7,12 @@ def get_file_length(filepointer):
     filepointer.seek(0, 0) # set the file pointer back to the beginning
     return file_length
 
+#def cognitoId(event):
+#    return event['requestContext']['identity']['cognitoIdentityId']
+
 def get_userid(event):
-    return event['requestContext']['identity']['cognitoAuthenticationProvider'].split(':')[-1]
+    return event['requestContext']['identity']['cognitoIdentityId']
+    #return event['requestContext']['identity']['cognitoAuthenticationProvider'].split(':')[-1]
 
 def formatted_error(error, statusCode=400):
     headers = {

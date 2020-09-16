@@ -25,7 +25,7 @@ const Home = ({photos, uploadFunc, delFunc, loading}) => {
                     <div>
                       Detected Objects
                     { photo.objects.map( (obj, j) => (
-                      <div className="card-text" key={i+ "-" + j}>{obj.item} <small>{parseFloat(obj.score * 100).toFixed(2)}%</small></div>
+                      <div className="card-text" key={i+ "-" + j}>{obj.item} <small>{parseFloat(obj.score).toFixed(2)}%</small></div>
                     ))}
                     </div>
                 }

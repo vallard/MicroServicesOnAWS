@@ -14,7 +14,8 @@ provider:
   logRetentionInDays: 5
   timeout: 30
   environment:
-    DYNAMODB_TABLE: "photoUsers"
+    DYNAMODB_TABLE: ${self:custom.dynamo_table.${self:custom.currentStage}}
+    S3_PHOTO_BUCKET: ${self:custom.s3_bucket.${self:custom.currentStage}}
   iamManagedPolicies: 
     - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
   iamRoleStatements:
@@ -23,7 +24,10 @@ provider:
         - s3:ListBucket
         - s3:PutObject
         - s3:GetObject
-      Resource: "arn:aws:s3:::crphotoapp"
+        - s3:DeleteObject
+      Resource: 
+        - "arn:aws:s3:::crphotoapp/*"
+        - "arn:aws:s3:::crphotoapp-dev/*"
     - Effect: Allow
       Action:
         - logs:CreateLogGroup
@@ -38,7 +42,9 @@ provider:
         - dynamodb:PutItem
         - dynamodb:DeleteItem
         - dynamodb:UpdateItem
-      Resource: arn:aws:dynamodb:us-west-2:188966951897:table/photoUsers
+      Resource: 
+        - arn:aws:dynamodb:us-west-2:188966951897:table/photoUsers
+        - arn:aws:dynamodb:us-west-2:188966951897:table/devPhotoUsers
     - Effect: Allow
       Action:
         - cognito-idp:AdminListGroupsForUser
@@ -46,6 +52,10 @@ provider:
         - cognito-idp:AdminConfirmSignUp
         - cognito-idp:AdminGetUser
       Resource: ${self:custom.userPoolArn}
+    - Effect: Allow
+      Action: 
+        - rekognition:DetectLabels
+      Resource: "*"
 
 package: 
   include:
@@ -55,6 +65,13 @@ custom:
   defaultStage: dev
   currentStage: ${opt:stage, self:custom.defaultStage}
   userPoolArn: "arn:aws:cognito-idp:us-west-2:188966951897:userpool/us-west-2_v8zZp3Jvv"
+  dynamo_table:
+    prod: "photoUsers"
+    dev: "devPhotoUsers"
+  s3_bucket: 
+    prod: "crphotoapp"
+    dev: "crphotoapp-dev"
+  s3_keybase: "private/"
   prune:
     automatic: true
     includeLayers: true
@@ -88,6 +105,22 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+
+  process:
+    handler: photos.process
+    events: 
+     - s3: 
+        bucket: ${self:custom.s3_bucket.${self:custom.currentStage}}
+        event: s3:ObjectCreated:*
+        rules:
+          - suffix: .jpg
+        existing: true
+     - s3: 
+        bucket: ${self:custom.s3_bucket.${self:custom.currentStage}}
+        event: s3:ObjectCreated:*
+        rules:
+          - suffix: .png
+        existing: true
 
 resources:
   - ${file(resources/api-gateway-errors.yml)}

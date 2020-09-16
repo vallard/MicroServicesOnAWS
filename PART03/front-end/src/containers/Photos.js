@@ -21,10 +21,6 @@ class Photos extends Component {
     if (f.files[0]) {
       const file = f.files[0]
       this.props.upPhoto(file);
-      /*data.append('name', 'Image Upload');
-      data.append('file', f.files[0]);
-      data.append('filename', f.files[0].name);
-      this.props.upPhoto(data);*/
     }
   }
 
@@ -36,6 +32,7 @@ class Photos extends Component {
   render() {
     return (
     <>
+      {/*console.log(this.props.photos)*/}
       <Navi user={this.props.user} signOutFunc={this.props.signOut} errors={this.props.photoErrors} />
       <Home photos={this.props.photos} 
         loading={this.props.photosLoading}

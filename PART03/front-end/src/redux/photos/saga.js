@@ -38,13 +38,13 @@ export function* get_photos() {
 
 export function* up_photo(action) {
   /* upload the photo */
-  console.log("Data upload: ", action.data);
+  DEBUG && console.log("Data upload: ", action.data);
   try {
     // upload to S3
     var response = yield call(photoAPI.up, action.data) 
     // if result is successful, write in database.
     response = yield call(photoAPI.write, action.data); 
-    console.log(response)
+    DEBUG && console.log(response)
     return yield put(gotPhotos(response))
   } catch(error) {
     return yield put(gotError(error))
@@ -53,15 +53,13 @@ export function* up_photo(action) {
 
 export function* del_photo(action) {
   /* delete the photo */
-  let response = yield call(photoAPI.del, { id : action.id })
-  if (response instanceof Error) {
-    return yield put(gotError(response))
+  try {
+    let response = yield call(photoAPI.del, { id : action.id })
+    return yield put(gotPhotos(response))
+  }catch(error) {
+    return yield put(gotError(error))
   }
-  console.log(response)
-  return yield put(gotPhotos(response.photos))
 }
-  
-
 
 export function* watchPhotos(){
   yield takeEvery(GET_PHOTOS, get_photos)

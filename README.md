@@ -11,13 +11,24 @@ Check out the [Tech Stack](./TECH.md) to see the technologies that will be used 
 
 ## Contents
 
-### Part 1
+### Part 1 - Set up
 
-* [React Application](./REACT1.md) 
-* Serving on S3
-* Configuring Route 53
-* Configuring Cloud Front
-* Configuring TLS Certs
+* [AWS Account](./PART01/SETUP.md)
+* [AWS CLI](./PART01/SETUP.md#AWS-CLI)
+* [Clone this repo](./PART01/SETUP.md#Git-Clone)
+
+### Part 2 - WebSite Up
+
+* [Serving on S3](./PART02/S3.md)
+* [Route 53 Domain](./PART02/Route53.md)
+* [Certificate Manager](./PART02/CertManager.md)
+* [Configure Cloud Front](./PART02/CloudFront.md)
+* [Update Route 53](./PART02/Route53Part2.md)
+
+### Part 3 - Front End Development
+
+* [Develop Our React Application](./PART03/REACT1.md) 
+* [Cognito Setup](./PART03/Cognito.md)
 
 ### Part 2 
 

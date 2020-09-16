@@ -49,7 +49,7 @@ class SignUp extends Component {
             /> 
             :
             <>
-              <p className="lead text-muted">Sign Up to optimize your Google® Ads Account.</p> 
+              <p className="lead text-muted">Sign Up to store all your photos.</p> 
               <SignInForm 
                 action={this.props.signUp}
                 loading={this.props.loading}
