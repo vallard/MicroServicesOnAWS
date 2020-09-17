@@ -5,7 +5,9 @@ Course Materials for Microservices on AWS
 
 This course serves as an introduction to running various services on AWS.  We show how these "microservices" can be stitched together to make a working application. Going through this course will give you an idea of what a "Full Stack" developer does.  You will be configuring services and writing code.  
 
-Our application is a simple photo album complete with object recognition.  
+Our application is a simple photo album complete with object recognition. 
+
+![image of app](images/test02.png) 
 
 Check out the [Tech Stack](./TECH.md) to see the technologies that will be used through this course. 
 
