@@ -1,5 +1,7 @@
 # MicroServices On AWS
-Course Materials for Microservices on AWS
+Course Materials for Microservices on AWS O'Reilly Class That I teach. 
+
+Join me [Monday, Sept 21st, 2020!](https://learning.oreilly.com/live-training/courses/microservices-on-aws/0636920403982/)
 
 ## Introduction 
 
@@ -10,6 +12,28 @@ Our application is a simple photo album complete with object recognition.
 ![image of app](images/test02.png) 
 
 Check out the [Tech Stack](./TECH.md) to see the technologies that will be used through this course. 
+
+ 
+
+## Architecture
+
+Our architecture looks as follows:
+
+### Front End Services
+![arch04](images/arch04.png)
+We use s3 static hosting with cloudfront, S3, and certificates. 
+
+### Client APIs
+![arch01 ](images/arch01.png)
+When the browser downloads the application, it calls three different APIs: Cognito, S3, and our API Gateway. 
+
+### Backend System
+![arch02](images/arch02.png)
+We use the [serverless](https://serverless.com) project to create our API Gateway and Lambdas.  We also use DynamoDB to store metadata.
+
+### Object Recognition 
+![arch03](images/arch03.png)
+Once images are uploaded, we can do object detection on them to find things inside of them. AI!
 
 ## Contents
 
