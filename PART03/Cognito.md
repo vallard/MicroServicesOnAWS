@@ -50,6 +50,11 @@ We will create a basic one.  Note the User Pool ID and App client ID you used in
 
 ![cognito identity pool](../images/cognito06.png)
 
+We will then create a new IAM identity.  At the time I was writing this IAM went down. 
+
+![IAM Down](../images/iamDown.png)
+
+This is one of the drawbacks of relying on a cloud provider, as this is out of our hands to fix.  On the other hand, you will have problems if you do your own identities as well. 
 
 
 
