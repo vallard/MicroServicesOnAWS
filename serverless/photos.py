@@ -25,7 +25,7 @@ def update_dynamo(s3_key, labels):
         return formatted_error("Table Query Error: ", str(e))
     if 'Item' not in result:
         print("Item not in result: ", result)
-        return formatted_error("Should have been something in the table: ", str(e))
+        return formatted_error("Should have been something in the table: ", str(result))
 
     current_photos = result['Item']['photos']
     photo_to_update = [x for x in current_photos if x['name'] == imageName][0]

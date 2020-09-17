@@ -29,17 +29,15 @@ Check out the [Tech Stack](./TECH.md) to see the technologies that will be used 
 
 * [Develop Our React Application](./PART03/REACT1.md) 
 * [Cognito Setup](./PART03/Cognito.md)
+* [Makefiles](./PART03/Make.md)
 
-### Part 2 
+### Part 4 - Serverless Backend
 
-* Cognito - User Authentication
-* React Updates for User to Signin
+* [DynamoDB](./PART04/DynamoDB.md)
+* [Serverless](./PART04/Serverless.md)
+* [Front End to Backend](./PART04/Connect.md)
 
-### Part 3
+### Part 5 - Putting it all together
 
-* API Gateway
-* Lambdas
-* DynamoDB
-* S3 Object Store
-* Lambda Responses
-* AWS Rekognition
+* [Amazon Rekognition](./PART05/Rek.md)
+* [Summary](./PART05/TheEnd.md)

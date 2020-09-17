@@ -1,0 +1,26 @@
+Resources:
+  ## TODO: Need to account for dev and prod ARN users. See:
+  ## https://github.com/davidgf/serverless-cognito/blob/master/serverless.yml
+  GatewayResponseDefault4XX:
+    Type: 'AWS::ApiGateway::GatewayResponse'
+    Properties:
+      ResponseParameters:
+         gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+         gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+      ResponseType: DEFAULT_4XX
+      RestApiId:
+        Ref: 'ApiGatewayRestApi'
+  GatewayResponseDefault5XX:
+    Type: 'AWS::ApiGateway::GatewayResponse'
+    Properties:
+      ResponseParameters:
+         gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+         gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+      ResponseType: DEFAULT_5XX
+      RestApiId:
+        Ref: 'ApiGatewayRestApi'
+  ApiGatewayRestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: ${self:service}-${self:custom.currentStage}
+

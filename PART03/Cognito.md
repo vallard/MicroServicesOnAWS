@@ -57,6 +57,17 @@ We will then create a new IAM identity.  At the time I was writing this IAM went
 This is one of the drawbacks of relying on a cloud provider, as this is out of our hands to fix.  On the other hand, you will have problems if you do your own identities as well. 
 
 
+Let Cognito create a new IAM role for you.  We will modify it later, so take note of the name. 
+
+
+![cognito iam](../images/cognito08.png)
+
+## 03 Sign in
+
+At this point you should be able to sign in to the web application on localhost!  You'll need to sign up with a real email address so you actually get the confirmation code that is sent.  Then you can log in.  When you log in you'll see some errors, but we will fix those as we add more microservices on the back end. 
+
+![cognito iam](../images/cognito07.png)
+
 
 
  
