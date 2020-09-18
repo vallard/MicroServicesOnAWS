@@ -13,19 +13,19 @@ Going back to our front end code, update the `src/config.js` with the values of 
 
 __dev:__
 
-```json
+```
  apiGateway: {
     REGION: "us-west-2",
-    URL: "dev.api.pics2.castlerock.ai",
+    URL: "https://dev.api.pics2.castlerock.ai",
   }, 
 ``` 
 
 __prod:__
 
-```json
+```
 apiGateway: {
     REGION: "us-west-2",
-    URL: "api.pics2.castlerock.ai",
+    URL: "https://api.pics2.castlerock.ai",
   },
 ```
 
@@ -35,20 +35,20 @@ These are the photo buckets you created.
 
 __dev:__
 
-```json
- apiGateway: {
+```
+ s3: {
+    BUCKET: "crpics3app-dev",
     REGION: "us-west-2",
-    URL: "https://dev.api.pics2.castlerock.ai",
-  }, 
+  } 
 ``` 
 
 __prod:__
 
-```json
-apiGateway: {
+```
+s3:
+    BUCKET: "crpics3app",
     REGION: "us-west-2",
-    URL: "https://api.pics2.castlerock.ai",
-  },
+  }
 ```
 
 ## 02 Test front end

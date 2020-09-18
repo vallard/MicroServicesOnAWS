@@ -99,8 +99,8 @@ You'll need to put the names of the buckets you created. The `"arn:aws:s3:::<you
 As you just created dynamoDB resources you should be able to get the ARN by navigating to dynamodb and checking each table.  They should look something like: 
 
 ```yaml
-	- arn:aws:dynamodb:us-west-2:188966951897:table/photoUsers
- 	- arn:aws:dynamodb:us-west-2:188966951897:table/devPhotoUsers
+  - arn:aws:dynamodb:us-west-2:188966951897:table/photoUsers
+  - arn:aws:dynamodb:us-west-2:188966951897:table/devPhotoUsers
 ```
  
 ### Custom Resources
