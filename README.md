@@ -53,7 +53,7 @@ Once images are uploaded, we can do object detection on them to find things insi
 
 ### Part 3 - Front End Development
 
-* [Develop Our React Application](./PART03/REACT1.md) 
+* [Develop Our React Application](./PART03/React01.md) 
 * [Cognito Setup](./PART03/Cognito.md)
 * [Makefiles](./PART03/Make.md)
 
