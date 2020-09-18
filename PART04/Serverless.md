@@ -36,7 +36,7 @@ cd serverless
 serverless create --template aws-python
 ```
 
-But we already have one started for you that we just need to modify. Navigate to the [`serverless.yaml`](../serverless/serverless.yaml) file and let's start editing. 
+But we already have one started for you that we just need to modify. Navigate to the [`serverless.yml`](../serverless/serverless.yml) file and let's start editing. 
 
 ## 01 Prereqs
 
