@@ -11,9 +11,10 @@ Our application is a simple photo album complete with object recognition.
 
 ![image of app](images/test02.png) 
 
+### Try it out: [https://photos.castlerock.ai](https://photos.castlerock.ai)
+
 Check out the [Tech Stack](./TECH.md) to see the technologies that will be used through this course. 
 
- 
 
 ## Architecture
 
