@@ -79,7 +79,11 @@ TYPES	EDGE
 TAGS	prod
 ```
 
-The above `27ieco0k2d` and `harwchm2q8` are the ids we need. We will put a new statement in our policy for this API: 
+The above `27ieco0k2d` and `harwchm2q8` are the ids we need. We will put a new statement in our policy for this API.
+
+* Go to Roles
+* Select the Cognito Role that is authenticated. (something like: `Cognito_picsAuth_Role`)
+* Click on its oneClick policy name under attached policies.  We will modify this by adding a statement like the following:   
 
 ```
  {

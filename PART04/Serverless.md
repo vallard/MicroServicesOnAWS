@@ -56,24 +56,31 @@ aws s3 mb s3://crpics2app-dev
 
 We'll have to add a policy for each bucket.  Go to the Bucket, then select `Permissions` and then select `CORS configuration`.  Add the following: 
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
-<CORSRule>
-    <AllowedOrigin>*</AllowedOrigin>
-    <AllowedMethod>HEAD</AllowedMethod>
-    <AllowedMethod>GET</AllowedMethod>
-    <AllowedMethod>PUT</AllowedMethod>
-    <AllowedMethod>POST</AllowedMethod>
-    <AllowedMethod>DELETE</AllowedMethod>
-    <MaxAgeSeconds>3000</MaxAgeSeconds>
-    <ExposeHeader>x-amz-server-side-encryption</ExposeHeader>
-    <ExposeHeader>x-amz-request-id</ExposeHeader>
-    <ExposeHeader>x-amz-id-2</ExposeHeader>
-    <ExposeHeader>ETag</ExposeHeader>
-    <AllowedHeader>*</AllowedHeader>
-</CORSRule>
-</CORSConfiguration>
+```json
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "HEAD",
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": [
+            "x-amz-server-side-encryption",
+            "x-amz-request-id",
+            "x-amz-id-2",
+            "ETag"
+        ],
+        "MaxAgeSeconds": 3000
+    }
+]
 ```
 Do this for both buckets. 
 

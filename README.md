@@ -1,7 +1,7 @@
 # MicroServices On AWS
 Course Materials for Microservices on AWS O'Reilly Class That I teach. 
 
-Join me [Monday, Sept 21st, 2020!](https://learning.oreilly.com/live-training/courses/microservices-on-aws/0636920403982/)
+Join me [Monday, Jan 11th, 2021!](https://learning.oreilly.com/live-training/courses/microservices-on-aws/0636920403982/)
 
 ## Introduction 
 

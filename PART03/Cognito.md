@@ -62,6 +62,14 @@ Let Cognito create a new IAM role for you.  We will modify it later, so take not
 
 ![cognito iam](../images/cognito08.png)
 
+Enter the Identity pool id into the app in `config.js` as well: 
+
+```
+...
+IDENTITY_POOL_ID: us-west-2:cb797dfa-8f0c-4c91-8497-4fa6e10411a4
+...
+```
+
 ## 03 Sign in
 
 At this point you should be able to sign in to the web application on localhost!  You'll need to sign up with a real email address so you actually get the confirmation code that is sent.  Then you can log in.  When you log in you'll see some errors, but we will fix those as we add more microservices on the back end. 

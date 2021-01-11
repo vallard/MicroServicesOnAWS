@@ -13,7 +13,10 @@ Request a public certificate and add 4 domains to it:
 
 ![cert manager](../images/certmanager01.png)
 
-* `pics.castlerock.ai` - this is the main page your users will access. 
+* `pics.castlerock.ai` - the main page.
+* `www.pics.castlerock.ai` - alias if people still do www.  Do people do that still? 
+
+ 
 * `dev.pics.castlerock.ai` - this is the staging page. 
 * `api.pics.castlerock.ai` - this is the API we will create later. 
 * `dev.api.pics.castlerock.ai` - this is the development API we will use.  
