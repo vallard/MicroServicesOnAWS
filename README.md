@@ -1,7 +1,7 @@
 # MicroServices On AWS
 Course Materials for Microservices on AWS O'Reilly Class That I teach. 
 
-Join me [Tuesday, Sept 7, 2021!](https://www.oreilly.com/live-events/building-microservices-with-react-and-aws/0636920403999/0636920061216/)
+Join me [Tuesday, May 3, 2022!](https://www.oreilly.com/live-events/building-microservices-with-react-and-aws/0636920403999/0636920061216/)
 =======
 
 ## Introduction 
